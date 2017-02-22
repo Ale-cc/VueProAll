@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<title>Vue.js 计算属性</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+	  <h2>Vue.js 计算属性</h2>
+	  <div id="app1">
+	    <div>
+	      正方形边长：{{ a }}m
+	    </div>
+	    <input type="range" v-model="a">
+	    <div>
+	      正方形面积：{{ s }}m<sup>2</sup>
+	    </div>
+	  </div>
+
+	  <br>
+
+	  <div id="app2">
+	  	<div>长：{{ x }}m、宽：{{ y }}m</div>
+	  	<input type="range" v-model="x">
+	  	<input type="range" v-model="y">
+	  	<div>长方形面积：{{ t }}m <sup>2</sup></div>
+	  </div>
+	  <br>
+
+		<div id="app3">
+		  <div>
+		    长：{{ m }}m、宽：{{ n }}m
+		  </div>
+		  <input type="range" v-model="m">
+		  <input type="range" v-model="n">
+		  <div>
+		    长方形面积：{{ c }}m<sup>2</sup>
+		  </div>
+		</div>	
+	</div>
+
+	
+	<script src="../js/vue.js"></script>
+<script>
+var vm = new Vue({
+	el:'#app1',
+	data:{
+		a: 1
+	},
+	computed: {
+		s:function(){
+			return this.a * this.a;
+		}		
+	}
+});
+
+var rec = new Vue({
+	el: '#app2',
+	data: {		
+		x:5,
+		y:8,
+		t:40		
+	}
+});
+
+var rec_ex1 = new Vue({
+  el: '#app3',
+  data: {
+    m: 6,
+    n: 5,
+    c: 30
+  }
+})
+
+rec.$watch('x',function(val){
+	this.t = val * this.y
+})
+rec.$watch('y',function(val){
+	this.t = val *this.x
+})
+
+rec_ex1.$watch('m', function (val) {
+  this.c = val * this.n
+})
+
+rec_ex1.$watch('n', function (val) {
+  this.c = this.m * val
+})
+
+</script>
+</body>
+</html>
